@@ -77,6 +77,7 @@ class FoodEntry(Base):
         DateTime(timezone=True),
         server_default=func.now(),
     )
+    roast: Mapped[str] = mapped_column(Text, nullable=None)
 
     user: Mapped["User"] = relationship(back_populates="entries")
 

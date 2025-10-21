@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "change_me_to_strong_random"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
     ALGORITHM: str = "HS256"
+    GOOGLE_AI_API_KEY: str = ""
 
 
 settings = Settings()
