@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from sqlalchemy import (
     DateTime,
     Float,
@@ -28,6 +27,12 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    username: Mapped[str] = mapped_column(
+        String,
+        unique=True,
+        index=True,
+        nullable=False,
+    )
     email: Mapped[str] = mapped_column(
         String,
         unique=True,
@@ -46,7 +51,7 @@ class User(Base):
         server_default=func.now(),
     )
 
-    entries: Mapped[Sequence["FoodEntry"]] = relationship(
+    entries: Mapped[list["FoodEntry"]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan",
     )
