@@ -1,0 +1,25 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Title and Header
+title Container Diagram for "Eat, Cry, Repeat"
+
+' Actors and External Systems
+Person(user, "User", "A person tracking their diet.")
+Person(admin, "Administrator", "Manages system content and views analytics.")
+System_Ext(gen_ai, "Google GenAI", "Generates humorous roasts based on meal input.")
+
+' System Boundary
+System_Boundary(c1, "Eat, Cry, Repeat System") {
+    ' Containers within our system
+    Container(web_app, "Web Application", "Python, FastAPI", "Provides all core functionality via a web interface and API.")
+    ContainerDb(database, "Database", "PostgreSQL", "Stores user profiles, food logs, and settings.")
+}
+
+' Relationships
+Rel(user, web_app, "Uses", "HTTPS")
+Rel(admin, web_app, "Uses", "HTTPS")
+
+Rel(web_app, database, "Reads from and writes to", "")
+Rel(web_app, gen_ai, "Requests roasts", "HTTPS/API")
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+' Title and Header
+title System Context Diagram for "Eat, Cry, Repeat"
+LAYOUT_WITH_LEGEND()
+
+' Actors
+Person(user, "User", "A person tracking their diet.")
+Person(admin, "Administrator", "Manages system content and views analytics.")
+
+' External Systems
+System_Ext(gen_ai, "Google GenAI", "Generates humorous roasts based on meal input.")
+
+' Our System
+System(ecr_system, "Eat, Cry, Repeat", "Web service that tracks calories and roasts users for their food choices.")
+
+' Relationships
+Rel(user, ecr_system, "", "HTTPS")
+Rel(admin, ecr_system, "", "HTTPS")
+
+Rel(ecr_system, gen_ai, "", "API")
+
+@enduml

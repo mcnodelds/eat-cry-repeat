@@ -1,0 +1,44 @@
+@startuml
+' Diagram Title
+title "Eat, Cry, Repeat" - Use Case Diagram
+
+' Define Actors
+actor User
+actor Admin
+
+' Admin is a type of User
+Admin --|> User
+
+' Define the system boundary
+rectangle "Eat, Cry, Repeat System" {
+  ' User Use Cases
+  usecase "Register Account" as UC_Register
+  usecase "Log In" as UC_Login
+  usecase "Manage Profile" as UC_Profile
+  usecase "Log Food" as UC_LogFood
+  usecase "Get AI Roast" as UC_Roast
+  usecase "Configure Roast Level" as UC_ConfigureRoast
+  usecase "View Personal Statistics" as UC_Stats
+  usecase "Calculate Daily Norm" as UC_Calc
+
+  ' Admin Use Cases
+  usecase "Manage Product Database" as UC_Admin_Products
+  usecase "View All User Analytics" as UC_Admin_Analytics
+
+  ' Define relationships for User
+  User -- UC_Register
+  User -- UC_Login
+  User -- UC_Profile
+  User -- UC_LogFood
+  User -- UC_ConfigureRoast
+  User -- UC_Stats
+
+  ' Define relationships for Admin
+  Admin -- UC_Admin_Products
+  Admin -- UC_Admin_Analytics
+
+  ' Define include/extend relationships to show dependencies
+  UC_LogFood ..> UC_Roast : <<include>>
+  UC_Profile ..> UC_Calc : <<include>>
+}
+@enduml

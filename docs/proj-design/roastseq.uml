@@ -1,0 +1,34 @@
+@startuml
+' Diagram Title
+title "Sequence Diagram: User Logs a Meal and Gets Roasted"
+
+' Define Participants
+actor User
+participant "Frontend (Browser)" as FE
+participant "Backend System" as BE
+database "Database" as DB
+participant "AI Service" as AI
+
+' Describe the flow
+User -> FE: Enters meal details and submits
+activate FE
+
+FE -> BE: Submit new meal entry
+activate BE
+
+BE -> DB: Store meal data
+activate DB
+DB --> BE: Confirm meal saved
+deactivate DB
+
+BE -> AI: Request roast for meal
+activate AI
+AI --> BE: Return roast comment
+deactivate AI
+
+BE --> FE: Return saved meal and roast
+deactivate BE
+
+FE -> User: Display confirmation and AI roast
+deactivate FE
+@enduml

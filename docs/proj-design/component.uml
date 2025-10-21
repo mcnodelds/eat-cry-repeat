@@ -1,0 +1,40 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Title and Header
+title Component Diagram for Web Application
+
+' External actors/systems that interact with these components
+Person(user, "User")
+System_Ext(gen_ai, "Google GenAI")
+ContainerDb(database, "Database", "PostgreSQL")
+
+' Container Boundary
+Container_Boundary(c1, "Web Application") {
+
+    ' Components
+    Component(auth_controller, "Auth Controller", "FastAPI Router", "Handles user registration and login.")
+    Component(profile_controller, "Profile Controller", "FastAPI Router", "Manages user profile, stats, and daily norm calculation.")
+    Component(diary_controller, "Food Diary Controller", "FastAPI Router", "Handles adding food, viewing the diary, and triggering roasts.")
+    Component(admin_controller, "Admin Controller", "FastAPI Router", "Provides endpoints for admin panel functionality.")
+
+    Component(roasting_service, "AI Roasting Service", "Python Module", "Encapsulates all logic for communicating with the Google GenAI service.")
+    Component(data_access, "Data Access Layer", "SQLAlchemy Core", "Provides an interface for all database operations (CRUD).")
+
+    ' Relationships within the container
+    Rel(auth_controller, data_access, "Uses")
+    Rel(profile_controller, data_access, "Uses")
+    Rel(admin_controller, data_access, "Uses")
+
+    Rel(diary_controller, data_access, "Uses")
+    Rel(diary_controller, roasting_service, "Uses", "To get a roast")
+}
+
+' Relationships to external elements
+Rel(user, auth_controller, "Submits credentials", "HTTPS")
+Rel(user, profile_controller, "Manages profile", "HTTPS")
+Rel(user, diary_controller, "Logs food", "HTTPS")
+
+Rel(roasting_service, gen_ai, "Makes API calls to", "HTTPS")
+Rel(data_access, database, "Reads from and writes to", "JDBC/TCP")
+@enduml
